@@ -46,9 +46,16 @@ class TimelineViewController: UIViewController {
         
         //7
         query.findObjectsInBackgroundWithBlock {(result: [AnyObject]?, error: NSError?) -> Void in
-            //8
             self.posts = result as? [Post] ?? []
-            //9
+            
+            // 1
+            for post in self.posts {
+                // 2
+                let data = post.imageFile?.getData()
+                // 3
+                post.image = UIImage(data: data!, scale:1.0)
+            }
+            
             self.tableView.reloadData()
         }
     }
@@ -104,10 +111,11 @@ extension TimelineViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // 2
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! UITableViewCell
+        // 1 In this line we have added a cast to PostTableViewCell. In Storyboard we've configured a custom class for our Table View Cell. In order to access its specific properties we need to perform a cast to the type of our custom class. Without this cast the cell variable would have a type of a plain old UITableViewCell instead of our PostTableViewCell.
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
         
-        cell.textLabel!.text = "Post"
+        // 2
+        cell.postImageView.image = posts[indexPath.row].image
         
         return cell
     }
