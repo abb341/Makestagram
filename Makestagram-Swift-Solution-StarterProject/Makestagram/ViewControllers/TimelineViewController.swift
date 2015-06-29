@@ -25,41 +25,13 @@ class TimelineViewController: UIViewController {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        //1
-        let followingQuery = PFQuery(className: "Follow")
-        followingQuery.whereKey("fromUser", equalTo:PFUser.currentUser()!)
-        
-        //2
-        let postsFromFollowedUsers = Post.query()
-        postsFromFollowedUsers!.whereKey("user", matchesKey: "toUser", inQuery: followingQuery)
-        
-        //3
-        let postsFromThisUser = Post.query()
-        postsFromThisUser!.whereKey("user", equalTo: PFUser.currentUser()!)
-        
-        //4 We create a combined query of the 2. and 3. queries, using the orQueryWithSubqueries method. The query generated this way will return any Post that meets either of the constraints of the queries in 2. or 3.
-        let query = PFQuery.orQueryWithSubqueries([postsFromFollowedUsers!, postsFromThisUser!])
-        //5
-        query.includeKey("user")
-        //6
-        query.orderByDescending("createdAt")
-        
-        //7
-        query.findObjectsInBackgroundWithBlock {(result: [AnyObject]?, error: NSError?) -> Void in
+        ParseHelper.timelineRequestforCurrentUser {
+            (result: [AnyObject]?, error: NSError?) -> Void in
             self.posts = result as? [Post] ?? []
-            
-            // 1
-            for post in self.posts {
-                // 2
-                let data = post.imageFile?.getData()
-                // 3
-                post.image = UIImage(data: data!, scale:1.0)
-            }
             
             self.tableView.reloadData()
         }
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -69,7 +41,7 @@ class TimelineViewController: UIViewController {
         // instantiate photo taking class, provide callback for when photo  is selected
         photoTakingHelper = PhotoTakingHelper(viewController: self.tabBarController!) { (image: UIImage?) in
            let post = Post()
-            post.image = image
+            post.image.value = image!
             post.uploadPost()
         }
     }
@@ -111,12 +83,16 @@ extension TimelineViewController: UITableViewDataSource {
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        // 1 In this line we have added a cast to PostTableViewCell. In Storyboard we've configured a custom class for our Table View Cell. In order to access its specific properties we need to perform a cast to the type of our custom class. Without this cast the cell variable would have a type of a plain old UITableViewCell instead of our PostTableViewCell.
         let cell = tableView.dequeueReusableCellWithIdentifier("PostCell") as! PostTableViewCell
         
+        let post = posts[indexPath.row]
+        // 1
+        post.downloadImage()
+        post.fetchLikes()
         // 2
-        cell.postImageView.image = posts[indexPath.row].image
+        cell.post = post
         
+                
         return cell
     }
     

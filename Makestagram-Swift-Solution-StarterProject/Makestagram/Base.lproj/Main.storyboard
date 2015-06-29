@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="qFh-Zo-Gam">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Photo View Controller-->
@@ -58,22 +59,87 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="320" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xC0-iR-ewq">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="470" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xC0-iR-ewq">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="320" id="GFy-lO-urJ" customClass="PostTableViewCell" customModule="Makestagram" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="PostCell" rowHeight="470" id="GFy-lO-urJ" customClass="PostTableViewCell" customModule="Makestagram" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="GFy-lO-urJ" id="Ctr-sQ-92N">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cgd-Dr-XLc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="320"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cgd-Dr-XLc">
+                                                    <rect key="frame" x="0.0" y="0.0" width="600" height="344"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="344" id="cbV-66-Bzb"/>
+                                                    </constraints>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AIx-7g-cvC" userLabel="LikeButton">
+                                                    <rect key="frame" x="544" y="401" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="2Cw-EA-gjs"/>
+                                                        <constraint firstAttribute="height" constant="44" id="Mcw-Uu-qQI"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="4" minY="4" maxX="4" maxY="4"/>
+                                                    <state key="normal" image="Heart">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="selected" image="Heart Selected"/>
+                                                    <connections>
+                                                        <action selector="likeButtonTapped:" destination="GFy-lO-urJ" eventType="touchUpInside" id="hZW-pj-vqO"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4VG-BW-USm" userLabel="ActionButton">
+                                                    <rect key="frame" x="8" y="407" width="44" height="44"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="44" id="IQj-6J-wPn"/>
+                                                        <constraint firstAttribute="height" constant="44" id="Ose-iB-fKm"/>
+                                                    </constraints>
+                                                    <state key="normal" image="More">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="moreButtonTapped:" destination="GFy-lO-urJ" eventType="touchUpInside" id="TZN-Ce-EeL"/>
+                                                    </connections>
+                                                </button>
+                                                <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Heart" translatesAutoresizingMaskIntoConstraints="NO" id="u8E-ke-NoQ" userLabel="LikeIcon">
+                                                    <rect key="frame" x="20" y="367" width="20" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="20" id="XxQ-Gf-hm1"/>
+                                                        <constraint firstAttribute="height" constant="20" id="th6-DU-AfA"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test User" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BX4-Tz-iUQ" userLabel="LikersLabel">
+                                                    <rect key="frame" x="60" y="366" width="482" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="rqb-mR-1kb"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.58823529411764708" green="0.58823529411764708" blue="0.58823529411764708" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="BX4-Tz-iUQ" secondAttribute="trailing" constant="50" id="1xZ-yd-CYX"/>
+                                                <constraint firstItem="cgd-Dr-XLc" firstAttribute="top" secondItem="Ctr-sQ-92N" secondAttribute="top" id="3wU-6X-n8I"/>
+                                                <constraint firstItem="BX4-Tz-iUQ" firstAttribute="leading" secondItem="u8E-ke-NoQ" secondAttribute="trailing" constant="20" id="8Zx-82-QJG"/>
+                                                <constraint firstItem="cgd-Dr-XLc" firstAttribute="leading" secondItem="Ctr-sQ-92N" secondAttribute="leading" id="O9l-6M-dtF"/>
+                                                <constraint firstItem="4VG-BW-USm" firstAttribute="top" secondItem="BX4-Tz-iUQ" secondAttribute="bottom" constant="20" id="S8K-Pe-sHH"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="4VG-BW-USm" secondAttribute="bottom" constant="10" id="TSx-b7-fgl"/>
+                                                <constraint firstItem="4VG-BW-USm" firstAttribute="leading" secondItem="Ctr-sQ-92N" secondAttribute="leadingMargin" id="Yhk-LG-A1f"/>
+                                                <constraint firstItem="u8E-ke-NoQ" firstAttribute="leading" secondItem="Ctr-sQ-92N" secondAttribute="leadingMargin" constant="12" id="gom-bD-RnV"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="AIx-7g-cvC" secondAttribute="trailing" constant="4" id="icA-wS-qGc"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="AIx-7g-cvC" secondAttribute="bottom" constant="16" id="ip8-mU-gYJ"/>
+                                                <constraint firstAttribute="trailing" secondItem="cgd-Dr-XLc" secondAttribute="trailing" id="qxQ-vV-eHe"/>
+                                                <constraint firstItem="4VG-BW-USm" firstAttribute="top" secondItem="u8E-ke-NoQ" secondAttribute="bottom" constant="20" id="vDf-NX-hYO"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="likeButton" destination="AIx-7g-cvC" id="EO8-IY-ohC"/>
+                                            <outlet property="likesIconImageView" destination="u8E-ke-NoQ" id="iwJ-zK-KoD"/>
+                                            <outlet property="likesLabel" destination="BX4-Tz-iUQ" id="FNf-1n-1y5"/>
+                                            <outlet property="moreButton" destination="4VG-BW-USm" id="nnm-2H-MJo"/>
                                             <outlet property="postImageView" destination="cgd-Dr-XLc" id="aQd-xx-FXq"/>
                                         </connections>
                                     </tableViewCell>
@@ -125,7 +191,10 @@
     </scenes>
     <resources>
         <image name="Camera" width="40" height="30"/>
+        <image name="Heart" width="72" height="68"/>
+        <image name="Heart Selected" width="72" height="68"/>
         <image name="Home" width="38" height="36"/>
+        <image name="More" width="26" height="17"/>
         <image name="People" width="42" height="42"/>
     </resources>
 </document>
